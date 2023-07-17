@@ -12,5 +12,5 @@ datasource db {
 
 model Pages {
   id Int @id @default(autoincrement())
-  type String
+  data String
 } 
