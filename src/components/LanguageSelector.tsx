@@ -1,7 +1,12 @@
 "use client";
-import { Button, Dropdown } from "flowbite-react";
 import React, { useState } from "react";
-
+import {
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
+  Button,
+} from "@material-tailwind/react";
 
 const LanguageSelector = ({ className }: { className?: string }) => {
   const [language, setLanguage] = useState("English");
@@ -20,13 +25,18 @@ const LanguageSelector = ({ className }: { className?: string }) => {
     },
   ]);
   return (
-    <div className="mr-3">
-      <Dropdown label={language} color={"gray"} t>
-        {languages.map((language) => (
-          <Dropdown.Item key={language.id} onClick={() => setLanguage(language.type)}>{language.type}</Dropdown.Item>
-        ))}
-      </Dropdown>
-    </div>
+      <Menu placement="bottom">
+        <MenuHandler >
+          <Button className="bg-slate-800 mr-3 w-36">{language}</Button>
+        </MenuHandler>
+        <MenuList className=" bg-slate-200 w-36 space-y-4 p-2">
+          {
+            languages.map((lang) => lang.type === language ? undefined : <MenuItem className="text-left px-5 py-3 bg-lime-600" key={lang.id} onClick={() => (setLanguage(lang.type))}>{lang.type}</MenuItem>)
+          }
+        </MenuList>
+      </Menu>
+
+
 
   );
 };
