@@ -5,7 +5,7 @@ export default class pageRepository {
     constructor() {
         this.client = new PrismaClient()
     }
-    public async  getUserById(id: number) {
+    public async getUserById(id: number) {
         try {
           const page = await this.client.pages.findUnique({
             where: {
