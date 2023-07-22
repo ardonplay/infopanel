@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import userRepository from "root/prisma/repositories/userRepository";
-import { cookies } from "next/headers";
 const bcrypt = require("bcrypt");
 
 export async function POST(req: Request) {
@@ -9,24 +8,33 @@ export async function POST(req: Request) {
     if (data.hasOwnProperty("login") && data.hasOwnProperty("pass")) {
       const user = await new userRepository().getUserByLogin(data.login);
 
-      if(!user) {
+      if (!user) {
         throw new Error("login or password is incorrect!");
       }
       if (
-        await bcrypt
+        (await bcrypt
           .compare(user?.password, data.pass)
-          .then((result: boolean) => result)
-      && data.login === user?.login) {
-       
-        return NextResponse.json(
+          .then((result: boolean) => result)) &&
+        data.login === user?.login
+      ) {
+        const response = NextResponse.json(
           {
             message: "welcome!",
-            status: 1
+            status: 1,
           },
           {
             status: 200,
           }
         );
+
+        response.cookies.set({
+          name: 'loggined',
+          value: 'true',
+          expires: new Date('2023-07-23'),
+          path: '/admin',
+        });
+
+        return response;
       } else {
         throw new Error("login or password is incorrect!");
       }
@@ -37,11 +45,11 @@ export async function POST(req: Request) {
     return NextResponse.json(
       {
         message: e.toString().split(": ").pop(),
-        status: 0
+        status: 0,
       },
       {
         status: 200,
       }
-    );
+    )
   }
 }

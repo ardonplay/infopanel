@@ -1,22 +1,16 @@
-import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Infopanel',
   description: 'Written by ardonplay',
 }
 
-export default function RootLayout({
-  children,
-}: {
+export default function LoginLayout({children}: {
   children: React.ReactNode
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body suppressHydrationWarning={true} className='p-0'>{children}</body>
     </html>
   )
 }

@@ -1,12 +1,14 @@
+import AdminPage from '@/components/admin/AdminPage';
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation';
 
-
 export default function adminPage() {
-    if(!cookies().has("loggined") || cookies().get("loggined")?.value === "false"){
+    
+    if (!cookies().has("loggined") || cookies().get("loggined")?.value === "false") {
         redirect("/admin/login")
     }
-    return (<div>
-        This is fucking admin page
-    </div>)
+
+    return (
+        <AdminPage />
+    )
 }
