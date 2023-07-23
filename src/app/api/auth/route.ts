@@ -30,8 +30,7 @@ export async function POST(req: Request) {
         response.cookies.set({
           name: 'loggined',
           value: 'true',
-          expires: new Date('2023-07-23'),
-          path: '/admin',
+          path: '/admin'
         });
 
         return response;
