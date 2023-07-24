@@ -5,7 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import bcrypt from "bcryptjs";
 import { redirect } from 'next/navigation';
-
+import style from "./globals.module.css"
 
 export default function LoginPage() {
 
@@ -42,7 +42,7 @@ export default function LoginPage() {
             }
             case 1: {
                 redirect("/admin")
-                
+
             }
         }
     }
@@ -50,11 +50,7 @@ export default function LoginPage() {
 
     return (
         <div
-            className="
-    w-full h-screen
-    bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500
-    background-animate
-  "
+            className={"w-full h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 " + style.background_animate}
         >
 
             <div className="h-screen flex items-center">
