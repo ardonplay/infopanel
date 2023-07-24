@@ -7,7 +7,7 @@ export default function LoginLayout({ children }: {
 
   return (
     <section>
-      <SideBar />
+      <SideBar/>
       <nav></nav>
       {children}
     </section>
