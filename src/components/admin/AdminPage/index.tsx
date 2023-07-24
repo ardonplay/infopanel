@@ -1,5 +1,5 @@
 import Image from "next/image"
-import LogOutItem from "./logOutItem"
+import LogOutItem from "./LogOutItem"
 
 export default function AdminPage() {
     return (
