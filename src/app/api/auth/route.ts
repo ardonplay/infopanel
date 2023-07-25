@@ -52,3 +52,19 @@ export async function POST(req: Request) {
     )
   }
 }
+
+export async function DELETE(req: Request) {
+  const response = NextResponse.json(
+    {
+      status: 200,
+    }
+  );
+
+  response.cookies.set({
+    name: 'loggined',
+    value: 'false',
+    path: '/admin'
+  });
+
+  return response;
+}
