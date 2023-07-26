@@ -3,7 +3,6 @@
 import { useState } from "react"
 import Image from "next/image"
 import axios from "axios"
-import { useRouter } from "next/navigation";
 
 export default function LogOutItem() {
     const [hovered, setHover] = useState(false)

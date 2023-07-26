@@ -4,19 +4,24 @@ import pageRepository from "root/prisma/repositories/pageRepository";
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
-  if (!id) {
-    return NextResponse.json("id not found!");
-  }
   const client = new pageRepository();
 
+  if (!id) {
+    const pages = await client.getAllUsers()
+    return NextResponse.json(pages)
+  }
   const page = await client.getUserById(Number(id));
 
-
-  if(page) {
-    page.data = JSON.parse(page.data)
+  if (page) {
     return NextResponse.json(page);
-  }
-  else {
-    return NextResponse.json("id not found!");
+  } else {
+    return NextResponse.json(
+      {
+        "error": "page not found"
+      },
+      {
+        status: 200,
+      }
+    );
   }
 }
