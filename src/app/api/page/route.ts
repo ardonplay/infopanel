@@ -7,8 +7,10 @@ export async function GET(request: Request) {
   const client = new pageRepository();
 
   if (!id) {
-    const pages = await client.getAllUsers()
-    return NextResponse.json(pages)
+    const pages = await client.getAllUsers();
+    return NextResponse.json(pages, {
+      status: 200,
+    });
   }
   const page = await client.getUserById(Number(id));
 
@@ -17,7 +19,7 @@ export async function GET(request: Request) {
   } else {
     return NextResponse.json(
       {
-        "error": "page not found"
+        error: "page not found",
       },
       {
         status: 200,
