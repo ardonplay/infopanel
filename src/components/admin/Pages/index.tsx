@@ -1,29 +1,32 @@
+import Link from "next/link"
 interface page {
     id: number
     title: string,
     type: string
 }
-export default function Pages({pages}:{pages: page[]}) {
+export default function Pages({ pages }: { pages: page[] }) {
 
     return (
-
-        <ul className="max-w-md divide-y divide-gray-200 dark:divide-gray-700">
+        <div className="flex flex-col w-1/2 mx-auto m-5">
             {
-                pages.map((page) =>  <li className="pb-3 sm:pb-4" key={page.id}>
-                <div className="flex items-center space-x-4">
-                    <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                           {page.title}
-                        </p>
-                        <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                           {page.type}
-                        </p>
-                    </div>
-                </div>
-            </li>)
+                pages.map((page) =>
+                    <Link href={"/admin/pages/" + page.id} className="flex items-center space-x-4 bg-slate-100 rounded-xl p-2 m-1 transform transition duration-500 hover:scale-105 hover:bg-slate-300" key={page.id}>
+                        <div className="ml-2 flex flex-row space-x-3">
+                            <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                {page.id}
+                            </p>
+                            <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                {page.title}
+                            </p>
+                            <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                                {page.type}
+                            </p>
+                        </div>
+                    </Link>
+                )
             }
-           
-        </ul>
+        </div>
+
 
     )
 }

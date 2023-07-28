@@ -23,23 +23,26 @@ export default class pageRepository {
         });
       }
     }
+    this.client.$disconnect;
     return content;
   }
   public async getAllUsers() {
     const pages = await this.client.pages.findMany();
-
-    return Promise.all(pages.map(async (page) => {
-      const content = await this.getContentOfPageByID(
-        page.type,
-        page.related_id
-      );
-      return {
-        id: page.id,
-        type: page.type,
-        title: page.title,
-        content: content,
-      } as CyberPage;
-    }));
+    this.client.$disconnect;
+    return Promise.all(
+      pages.map(async (page) => {
+        const content = await this.getContentOfPageByID(
+          page.type,
+          page.related_id
+        );
+        return {
+          id: page.id,
+          type: page.type,
+          title: page.title,
+          content: content,
+        } as CyberPage;
+      })
+    );
   }
   public async getUserById(id: number) {
     const page = await this.client.pages.findUnique({
@@ -52,7 +55,7 @@ export default class pageRepository {
       return undefined;
     }
     let content = await this.getContentOfPageByID(page.type, page.related_id);
-
+    this.client.$disconnect;
     return {
       id: page.id,
       type: page.type,
