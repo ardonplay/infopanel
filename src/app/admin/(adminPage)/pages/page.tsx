@@ -9,8 +9,8 @@ export default function Pages() {
         axios.get("/api/page").then((request) => {
             setPages(request.data)
         })
-    })
-   
+    }, [])
+    
     return (
         <div className="flex-initial w-full">
             <PageItem pages={pages} />

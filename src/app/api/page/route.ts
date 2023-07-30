@@ -7,12 +7,12 @@ export async function GET(request: Request) {
   const client = new pageRepository();
 
   if (!id) {
-    const pages = await client.getAllUsers();
+    const pages = await client.getAllPages();
     return NextResponse.json(pages, {
       status: 200,
     });
   }
-  const page = await client.getUserById(Number(id));
+  const page = await client.getPageById(Number(id));
 
   if (page) {
     return NextResponse.json(page);

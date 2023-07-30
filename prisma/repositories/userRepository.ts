@@ -12,6 +12,7 @@ export default class userRepository {
               login: login
             }
           })
+          await this.client.$disconnect();
           return user
         } catch(e) {
             return null
