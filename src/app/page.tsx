@@ -1,7 +1,7 @@
-import Header from "@/components/Header"
-import ImageSlider from "@/components/ImageSlider"
-import MainMenuButtons from "@/components/MainMenuButtons"
-import Navbar from "@/components/Navbar"
+import Header from "@/components/client/Header"
+import ImageSlider from "@/components/client/ImageSlider"
+import MainMenuButtons from "@/components/client/MainMenuButtons"
+import Navbar from "@/components/client/Navbar"
 
 export default function Home() {
   return (
