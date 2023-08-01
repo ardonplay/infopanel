@@ -15,9 +15,9 @@ export default function PageTypeSelector() {
     return (
         <Menu placement="bottom">
             <MenuHandler >
-                <Button className="bg-slate-800 mr-3 w-36">{pageType}</Button>
+                <Button className="bg-gray-800 mr-3 w-36">{pageType}</Button>
             </MenuHandler>
-            <MenuList className=" bg-slate-200 w-36 space-y-4 p-2">
+            <MenuList className=" bg-gray-200 w-36 space-y-4 p-2">
                 {
                     types.map((page_type) => page_type.name === pageType ? undefined : <MenuItem className="text-left px-5 py-3 bg-lime-600" key={page_type.id} onClick={() => (setPageType(page_type.name))}>{page_type.name}</MenuItem>)
                 }

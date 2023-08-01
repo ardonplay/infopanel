@@ -6,7 +6,7 @@ const Navbar = () => {
       <div className="flex flex-col justify-end w-[15vw] h-full mx-auto">
         <div className="flex-intial h-1/2">
           <nav className="flex flex-col justify-end h-full items-center">
-            <div className="p-10 bg-fuchsia-700 rounded-full">
+            <div className="p-10 bg-deep-purple-400 rounded-full">
               <Image src="/logo.png" alt="logo" width={128}
                 height={128} className="rounded-xl" />
             </div>

@@ -55,7 +55,7 @@ export default function LoginPage() {
 
             <div className="h-screen flex items-center">
                 <div className="flex flex-col mx-auto h-full items-center">
-                    <div className="text-8xl text-neutral-100 font-bold pt-20 h-1/3">
+                    <div className="text-8xl text-gray-100 font-bold pt-20 h-1/3">
                         Infopanel v0.1.0
                     </div>
                     <div className="flex-initial p-10 py-20 bg-gradient-to-b from-[#1e3b8ac5] to-[#1e3b8a3f] text-[#fff] backdrop-blur-lg border-[1px] border-solid border-white border-opacity-20 rounded-2xl shadow-[rgba(0,0,0,0.70)] shadow-2x">

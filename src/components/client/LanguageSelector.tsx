@@ -25,16 +25,16 @@ const LanguageSelector = ({ className }: { className?: string }) => {
     },
   ]);
   return (
-      <Menu placement="bottom">
-        <MenuHandler >
-          <Button className="bg-slate-800 mr-3 w-36">{language}</Button>
-        </MenuHandler>
-        <MenuList className=" bg-slate-200 w-36 space-y-4 p-2">
-          {
-            languages.map((lang) => lang.type === language ? undefined : <MenuItem className="text-left px-5 py-3 bg-lime-600" key={lang.id} onClick={() => (setLanguage(lang.type))}>{lang.type}</MenuItem>)
-          }
-        </MenuList>
-      </Menu>
+    <Menu placement="bottom">
+      <MenuHandler >
+        <Button className="bg-gray-800 mr-3 w-36">{language}</Button>
+      </MenuHandler>
+      <MenuList className=" bg-gray-200 w-36 space-y-4 p-2">
+        {
+          languages.map((lang) => lang.type === language ? undefined : <MenuItem className="text-left px-5 py-3 bg-lime-600" key={lang.id} onClick={() => (setLanguage(lang.type))}>{lang.type}</MenuItem>)
+        }
+      </MenuList>
+    </Menu>
 
 
 
