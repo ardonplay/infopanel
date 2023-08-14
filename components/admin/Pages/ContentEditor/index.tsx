@@ -1,30 +1,29 @@
 "use client"
-import { Dispatch, useState } from "react";
+import { Dispatch, useState, useRef } from "react";
 import BlockTypeDialog from "./BlockTypeDialog";
 import Editor from "./Editor";
 
 export default function ContentEditor() {
+    
     const [key, setKey] = useState(0)
 
-    const [blocksState, setBlocksState] = useState([{text: "", id: key}])
-    
+    const [blocksState, setBlocksState] = useState([{ text: "", id: key }])
+
     const updateBlockState = (value: string, id: number) => {
-        const newState = blocksState.map(obj => {
-            if (obj.id === id) {
-              return {...obj, text: value};
+        setBlocksState((blocksState) => blocksState.map((obj, i) => {
+            if (id === i) {
+                return { ...obj, text: value }
             }
             return obj;
-          });
-        setBlocksState(newState)
+        }))
     }
 
     const [blocks, setBlocks] = useState([<Editor key={key} id={key} onChange={updateBlockState} />])
-    const updateBlocks: Dispatch<string> = (value: string) => {
-        setKey(key + 1)
-        setBlocks([...blocks, <Editor key={key + 1} id={key+1} onChange={updateBlockState}  />])
-        setBlocksState([...blocksState, {text: "", id: key + 1}])
+    const updateBlocks: Dispatch<string> = () => {
+        setKey((key) => key + 1)
+        setBlocks((blocks) => [...blocks, <Editor key={key + 1} id={key + 1} onChange={updateBlockState} />])
+        setBlocksState((blocksState) => [...blocksState, { text: "", id: key + 1 }])
     }
-
 
     return (
         <div className=" bg-gray-400 rounded-xl p-5">
