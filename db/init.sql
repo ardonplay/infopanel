@@ -17,22 +17,6 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: public; Type: SCHEMA; Schema: -; Owner: pg_database_owner
---
-
-CREATE SCHEMA public;
-
-
-ALTER SCHEMA public OWNER TO pg_database_owner;
-
---
--- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: pg_database_owner
---
-
-COMMENT ON SCHEMA public IS 'standard public schema';
-
-
---
 -- Name: Type; Type: TYPE; Schema: public; Owner: postgres
 --
 
@@ -155,7 +139,7 @@ ALTER TABLE ONLY public."Users" ALTER COLUMN id SET DEFAULT nextval('public."Use
 --
 
 COPY public."Pages" (id, title, type, content) FROM stdin;
-1	Тестовая страница	TEXT_PAGE	[{"type": "TEXT_BLOCK", "content": "hello, my name is ardonplay!"}, {"type": "IMAGE", "content": "/content/cringe.png"}, {"type": "TEXT_BLOCK", "content": [{"type": "TEXT", "content": "hello my name is cringe!"}, {"type": "IMAGE", "content": "/content/cringe.png"}]}]
+1	Тестовая страница	TEXT_PAGE	{"type": "text_page", "content": [{"type": "text_block", "content": "hello, my name is ardonplay!"}, {"type": "image", "content": "/content/cringe.png"}, {"type": "text_block", "content": [{"type": "text", "content": "hello my name is cringe!"}, {"type": "image", "content": "/content/cringe.png"}]}]}
 \.
 
 
@@ -164,7 +148,7 @@ COPY public."Pages" (id, title, type, content) FROM stdin;
 --
 
 COPY public."Users" (id, login, password) FROM stdin;
-1	ardonplay	$2a$10$/BUEcaTGli6a4hkLxKu7B.onH/pzmxJsdT8awkCklpSxO15mpvt9y
+1	ardonplay	$2a$10$BZx00pAIa6reMo6sH53Et.FaIo17CU1ChMma85BUz059PYMF3U6Vu
 \.
 
 

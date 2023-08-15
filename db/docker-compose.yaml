@@ -29,7 +29,7 @@ services:
             - POSTGRES_DB=infopanel
             - POSTGRES_USER=postgres
             - POSTGRES_PASSWORD=postgres
-            - POSTGRES_EXTRA_OPTS=-Z6 --schema=public --blobs
+            - POSTGRES_EXTRA_OPTS=-Z6
             - SCHEDULE=@every 1h0m00s
             - BACKUP_KEEP_DAYS=7
             - BACKUP_KEEP_WEEKS=4
