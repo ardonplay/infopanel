@@ -1,5 +1,5 @@
 "use client"
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch,  useState } from "react";
 import {
     Button,
     Dialog,
@@ -28,7 +28,7 @@ export default function BlockTypeDialog({confirmAction}:{confirmAction: Dispatch
                     <div className="w-72">
                         <Select label="Select type" onChange={(value) => setSelectedType(value ? value : "")}>
                             {
-                                Object.values(block_type).map((block, key) => (<Option key={key + 1} value={block}>{block}</Option>))
+                                Object.values(block_type).filter((block) => block !== block_type.UNDEFINDED).map((block, key) => (<Option key={key + 1} value={block}>{block}</Option>))
                             }
                         </Select>
                     </div>

@@ -1,6 +1,6 @@
 export interface block {
   type: block_type;
-  content: block[] | string;
+  content: block[] | string | string[];
 }
 
 export function isBlock(obj: any): boolean {
