@@ -7,18 +7,10 @@ Usage:
     $0 [command] [options]
 
 Commands:
-    install      Install necessary components (sc-web, sc-machine) and clone knowledge bases
-    clean        Remove all knowledge base folders
-    add          Add a knowledge base from a local directory or a remote git repository
-    run          Run ostis
-    unplug       Remove a knowledge base from repo.path without deleting the directory
-    info         Display information about the knowledge bases in use
-    help         Show usage information
-
+    run          Run db
+    stop 	 Stop db
 Description:
-    pancake - script that allows you to install and manage knowledge bases.
-    It can install the required components, clean up existing knowledge bases,
-    and add new knowledge bases from git repositories.
+    database - script that just run and stop db
 
 USAGE
     exit 1
@@ -31,15 +23,32 @@ USAGE
 # COMMAND SWITCHER
 
 case $1 in
-# run ostis
+# run db
 run)
     shift 1;
     FILE=`realpath ./backups/last/infopanel-latest.sql.gz`
     gunzip -c -f $FILE > "$PWD/init.sql"
-    docker compose up
+    
+    while getopts "dh" opt; do
+        case $opt in
+        d) DETACHED=1 ;;
+        \?) echo "Invalid option -$OPTARG"
+            exit 1
+             ;;
+        esac
+    done
+
+    shift $((OPTIND - 1))
+
+    if [[ $DETACHED ]]; then
+        echo "STARTING..."
+        docker compose up -d
+    else 
+        docker compose up
+    fi
     ;;
 
-# stop ostis
+# stop db
 stop)
     shift 1;
     docker compose down 
