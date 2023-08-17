@@ -1,4 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import { page } from "@/Interfaces/PageInterfaces";
+import { Prisma, PrismaClient } from "@prisma/client";
 
 export default class pageRepository {
   private client: PrismaClient;
@@ -25,5 +26,13 @@ export default class pageRepository {
     }
 
     return page;
+  }
+
+  public async upsertPage(page: page){
+    await this.client.pages.upsert({
+      where: { id: page.id },
+      update: { title: page.title, type: page.type, content: page.content as unknown as Prisma.JsonArray},
+      create: { title: page.title, type: page.type, content: page.content as unknown as Prisma.JsonArray}
+    });
   }
 }

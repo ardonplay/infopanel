@@ -1,5 +1,5 @@
 "use client"
-import PageItem from "@/components/admin/Pages"
+import PageItem from "@/components/admin/Pages/Pages"
 import axios from "axios"
 import { useEffect, useState } from "react"
 export default function Pages() {

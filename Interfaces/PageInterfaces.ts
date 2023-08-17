@@ -1,3 +1,5 @@
+import { Type } from "@prisma/client";
+
 export interface block {
   type: block_type;
   content: block[] | string | string[];
@@ -19,4 +21,11 @@ export enum block_type {
   IMAGE = "IMAGE",
   TEXT = "TEXT",
   UNDEFINDED = "",
+}
+
+export interface page {
+  id: number,
+  title: string,
+  type: Type,
+  content: block[]
 }

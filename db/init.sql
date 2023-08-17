@@ -139,7 +139,7 @@ ALTER TABLE ONLY public."Users" ALTER COLUMN id SET DEFAULT nextval('public."Use
 --
 
 COPY public."Pages" (id, title, type, content) FROM stdin;
-1	Тестовая страница	TEXT_PAGE	{"type": "text_page", "content": [{"type": "text_block", "content": "hello, my name is ardonplay!"}, {"type": "image", "content": "/content/cringe.png"}, {"type": "text_block", "content": [{"type": "text", "content": "hello my name is cringe!"}, {"type": "image", "content": "/content/cringe.png"}]}]}
+1	Тестовая страница	TEXT_PAGE	[{"type": "text_block", "content": "hello, my name is ardonplay!"}, {"type": "image", "content": "/content/cringe.png"}, {"type": "text_block", "content": [{"type": "text", "content": "hello my name is cringe!"}, {"type": "image", "content": "/content/cringe.png"}]}]
 \.
 
 
