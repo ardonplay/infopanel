@@ -10,7 +10,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: false });
   }
   const currentPath = process.cwd()
-  const uploadDirectory = "/public/uploads/";
+  const publicDirectory = "/public"
+  const uploadDirectory = "/uploads/";
   const responses: { success: boolean; path?: string }[] = [];
 
   for (const file of files) {
@@ -34,7 +35,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    await writeFile(currentPath + uploadDirectory + path, buffer);
+    await writeFile(currentPath + publicDirectory + uploadDirectory + path, buffer);
     responses.push({ success: true, path: uploadDirectory + path });
   }
 

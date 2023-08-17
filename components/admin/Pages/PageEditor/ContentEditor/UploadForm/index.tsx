@@ -5,7 +5,8 @@ import { actionInterface, fileData } from "./interfaces";
 
 interface uploadFormProps {
   id: number,
-  onChange: (value: string | string[], id: number) => void
+  onChange: (value: string | string[], id: number) => void,
+  files: string[]
 }
 
 export interface uploadFormRef {
@@ -30,38 +31,44 @@ export const UploadForm = forwardRef<uploadFormRef, uploadFormProps>((props, ref
       case "DELETE_FILE":
         return {
           ...state,
-          fileList: state.fileList.filter((file) => file !== action.path),
+          fileList: state.fileList.filter((file, i) => i !== action.id),
+          uploadedFiles: state.uploadedFiles.filter((file, i) => i !== action.id)
         };
       default:
         return state;
     }
   };
-  
+
   const [data, dispatch] = useReducer(reducer, {
     inDropZone: false,
     fileList: [],
+    uploadedFiles: props.files
   });
 
   // to handle file uploads
   const uploadFiles = async () => {
 
     let files = data.fileList;
+    if (files.length !== 0) {
+      const formData = new FormData();
 
-    const formData = new FormData();
+      files.forEach((file) => formData.append("files", file));
 
-    files.forEach((file) => formData.append("files", file));
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
 
-    const response = await fetch("/api/upload", {
-      method: "POST",
-      body: formData,
-    });
+      if (!response.ok) {
+        alert("Error uploading files");
+      }
+      const filePaths = (await response.json() as uploadedFiles).map((file) => file.path).concat(data.uploadedFiles)
 
-    const uploadedFiles =  (await response.json() as uploadedFiles).map((file) => file.path)
-
-    if (!response.ok) {
-      alert("Error uploading files");
+      props.onChange(filePaths, props.id)
     }
-    props.onChange(uploadedFiles, props.id)
+    else {
+      props.onChange(data.uploadedFiles, props.id)
+    }
   };
 
   useImperativeHandle(ref, () => ({

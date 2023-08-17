@@ -54,7 +54,7 @@ export default function PageEditor({ page }: { page: page }) {
             </div>
             <div className="text-gray-900 text-xl m-5">
                 <p>Content</p>
-                <ContentEditor data={data} dispatch={dispatch} />
+                <ContentEditor data={data.content} dispatch={dispatch} />
             </div>
         </div>)
 }

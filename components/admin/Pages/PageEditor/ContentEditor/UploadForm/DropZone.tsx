@@ -82,7 +82,7 @@ const DropZone = ({ data, dispatch, id }: { data: fileData, dispatch: React.Disp
         </label>
       </div>
 
-      <FilePreview fileData={data.fileList} dispatch={dispatch}/>
+      <FilePreview fileData={data.fileList} imageSrc={data.uploadedFiles} dispatch={dispatch}/>
 
     </>
   );

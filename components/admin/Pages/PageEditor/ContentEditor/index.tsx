@@ -2,14 +2,14 @@
 import { Dispatch, useState, useRef, useEffect} from "react";
 import BlockTypeDialog from "./BlockTypeDialog";
 import Editor from "./TextEditor/Editor";
-import { block, block_type, page } from "@/Interfaces/PageInterfaces"
+import { block, block_type } from "@/Interfaces/PageInterfaces"
 import UploadForm, { uploadFormRef } from "./UploadForm";
 import { PageEditorActions } from "..";
-export default function ContentEditor({data, dispatch}: {data: page, dispatch: Dispatch<PageEditorActions>}) {
+export default function ContentEditor({data, dispatch}: {data: block[], dispatch: Dispatch<PageEditorActions>}) {
 
     const [key, setKey] = useState(0)
 
-    const [blocksState, setBlocksState] = useState<block[]>([{ type: block_type.TEXT_BLOCK, content: "" }])
+    const [blocksState, setBlocksState] = useState<block[]>(data)
 
     const [upload, setUpload] = useState(false)
 
@@ -22,7 +22,19 @@ export default function ContentEditor({data, dispatch}: {data: page, dispatch: D
         }))
     }
 
-    const [blocks, setBlocks] = useState([<Editor key={key} id={key} onChange={updateBlockState} />])
+    const [blocks, setBlocks] = useState<JSX.Element[]>(data.map((block, i) => {
+        switch (block.type) {
+            case block_type.TEXT_BLOCK: {
+                return (<Editor key={i} id={i} onChange={updateBlockState} value={data[i].content as string}/>)
+            }
+            case block_type.IMAGE: {
+                return (<UploadForm key={i} id={i} onChange={updateBlockState} ref={(element) => { uploadRefs.current[i] = element }} files={data[i].content as string[]}/>)
+            }
+            default: {
+                return <></>
+            }
+        }
+    }))
 
     const uploadRefs = useRef<(uploadFormRef | null)[]>([]);
 
@@ -30,12 +42,12 @@ export default function ContentEditor({data, dispatch}: {data: page, dispatch: D
         setKey((key) => key + 1)
         switch (value) {
             case block_type.TEXT_BLOCK: {
-                setBlocks((blocks) => [...blocks, <Editor key={key + 1} id={key + 1} onChange={updateBlockState} />])
+                setBlocks((blocks) => [...blocks, <Editor key={key + 1} id={key + 1} onChange={updateBlockState}  value=""/>])
                 setBlocksState((blocksState) => [...blocksState, { type: block_type.TEXT_BLOCK, content: "" }])
                 break;
             }
             case block_type.IMAGE: {
-                setBlocks((blocks) => [...blocks, <UploadForm key={key + 1} id={key + 1} onChange={updateBlockState} ref={(element) => { uploadRefs.current[key + 1] = element }} />])
+                setBlocks((blocks) => [...blocks, <UploadForm key={key + 1} id={key + 1} onChange={updateBlockState} ref={(element) => { uploadRefs.current[key + 1] = element }} files={[]} />])
                 setBlocksState((blocksState) => [...blocksState, { type: block_type.IMAGE, content: [""] }])
                 break;
             }
@@ -55,6 +67,7 @@ export default function ContentEditor({data, dispatch}: {data: page, dispatch: D
     }
     
     useEffect(() => {
+        console.log(blocksState)
         if(upload){
             setUpload(false);
             dispatch({type: "CHANGE_CONTENT", value: blocksState})
