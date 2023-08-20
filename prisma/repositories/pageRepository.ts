@@ -1,66 +1,38 @@
-import { PlainText, PrismaClient } from "@prisma/client";
+import { page } from "@/Interfaces/PageInterfaces";
+import { Prisma, PrismaClient } from "@prisma/client";
 
-interface CyberPage {
-  id: number;
-  type: string;
-  title: string;
-  content: PlainText;
-}
 export default class pageRepository {
   private client: PrismaClient;
 
   constructor() {
     this.client = new PrismaClient();
   }
-  public async getContentOfPageByID(type: string, id: number) {
-    let content = undefined;
-    switch (type) {
-      case "plain_text": {
-        content = await this.client.plainText.findUnique({
-          where: {
-            id: id,
-          },
-        });
-      }
-    }
-    this.client.$disconnect;
-    return content;
-  }
-  public async getAllUsers() {
+
+  public async getAllPages() {
     const pages = await this.client.pages.findMany();
-    this.client.$disconnect;
-    return Promise.all(
-      pages.map(async (page) => {
-        const content = await this.getContentOfPageByID(
-          page.type,
-          page.related_id
-        );
-        return {
-          id: page.id,
-          type: page.type,
-          title: page.title,
-          content: content,
-        } as CyberPage;
-      })
-    );
+    await this.client.$disconnect();
+    return pages;
   }
-  public async getUserById(id: number) {
+
+  public async getPageById(id: number) {
     const page = await this.client.pages.findUnique({
       where: {
         id: id,
       },
     });
-
+    await this.client.$disconnect();
     if (!page) {
       return undefined;
     }
-    let content = await this.getContentOfPageByID(page.type, page.related_id);
-    this.client.$disconnect;
-    return {
-      id: page.id,
-      type: page.type,
-      title: page.title,
-      content: content,
-    } as CyberPage;
+
+    return page;
+  }
+
+  public async upsertPage(page: page){
+    await this.client.pages.upsert({
+      where: { id: page.id },
+      update: { title: page.title, type: page.type, content: page.content as unknown as Prisma.JsonArray},
+      create: { title: page.title, type: page.type, content: page.content as unknown as Prisma.JsonArray}
+    });
   }
 }
