@@ -26,9 +26,6 @@ case $1 in
 # run db
 run)
     shift 1;
-    FILE=`realpath ./backups/last/infopanel-latest.sql.gz`
-    gunzip -c -f $FILE > "$PWD/init.sql"
-    
     while getopts "dh" opt; do
         case $opt in
         d) DETACHED=1 ;;
@@ -51,7 +48,8 @@ run)
 # stop db
 stop)
     shift 1;
-    docker compose down 
+    docker compose down
+    docker volume rm db-data
     ;;
 
 # show help
