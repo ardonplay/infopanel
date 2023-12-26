@@ -42,6 +42,12 @@ public class TestController {
 
         return pageRepository.save(page).getTitle();
     }
+    @GetMapping("/get_parents")
+    private String getParents(){
+        List<Page> pages = pageRepository.findAll();
+
+        return pages.stream().map(Page::getParentPage).toList().toString();
+    }
 
 
     @GetMapping("/get")

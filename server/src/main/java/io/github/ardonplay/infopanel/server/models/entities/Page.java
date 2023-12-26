@@ -1,11 +1,7 @@
 package io.github.ardonplay.infopanel.server.models.entities;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
-
 import java.util.List;
 
 @Entity(name = "pages")
@@ -21,9 +17,19 @@ public class Page {
     private String title;
 
     @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "parent_id", referencedColumnName = "id")
+    private Page parentPage;
+
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "type", referencedColumnName = "id")
     private PageType pageType;
 
     @OneToMany(mappedBy = "page", cascade = CascadeType.ALL)
     private List<PageContent> pageContents;
+
+    @Override
+    public String toString(){
+        return String.format("{ page: { id: %s, title: %s, pageType:  %s } }", id, title, pageType.getName());
+    }
+
 }
