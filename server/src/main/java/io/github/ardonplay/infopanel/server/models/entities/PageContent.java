@@ -19,14 +19,16 @@ public class PageContent {
     @Column(name = "id")
     private Integer id;
 
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "body", columnDefinition = "jsonb")
+    private JsonNode body;
+
+    @Column(name = "order")
+    private Integer order;
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "element_type", referencedColumnName = "id")
     private PageElementType pageElementType;
-
-    @JdbcTypeCode(SqlTypes.JSON)
-    @Column(name = "body", columnDefinition = "jsonb")
-    private JsonNode body;
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "page_id", referencedColumnName = "id")

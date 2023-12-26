@@ -31,6 +31,7 @@ CREATE TABLE
         "parent_id" int,
         "title" varchar NOT NULL,
         "type" int NOT NULL,
+        "order" int,
         FOREIGN KEY ("type") REFERENCES "page_type" ("id") ON DELETE CASCADE,
         FOREIGN KEY ("parent_id") REFERENCES "pages" ("id") ON DELETE CASCADE
     );
@@ -41,6 +42,7 @@ CREATE TABLE
         "page_id" int NOT NULL,
         "element_type" int NOT NULL,
         "body" jsonb NOT NULL,
+        "order" int,
         FOREIGN KEY ("page_id") REFERENCES "pages" ("id") ON DELETE CASCADE,
         FOREIGN KEY ("element_type") REFERENCES "page_element_type" ("id") ON DELETE CASCADE
 

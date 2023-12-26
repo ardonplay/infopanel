@@ -16,6 +16,9 @@ public class Page {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "order")
+    private Integer order;
+
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
     private Page parentPage;

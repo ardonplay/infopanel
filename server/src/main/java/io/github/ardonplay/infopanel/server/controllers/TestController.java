@@ -3,6 +3,7 @@ package io.github.ardonplay.infopanel.server.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.ardonplay.infopanel.server.models.contentElements.TextElement;
 import io.github.ardonplay.infopanel.server.models.entities.Page;
 import io.github.ardonplay.infopanel.server.models.entities.PageContent;
 import io.github.ardonplay.infopanel.server.models.entities.PageElementType;
@@ -20,6 +21,7 @@ import java.util.List;
 public class TestController {
     private final PageRepository pageRepository;
 
+    private final ObjectMapper mapper;
     @GetMapping()
     private String test() throws JsonProcessingException {
         Page page = new Page();
@@ -52,7 +54,11 @@ public class TestController {
 
     @GetMapping("/get")
     private String get() {
-        Page page = pageRepository.findAll().get(0);
-        return page.getPageContents().get(0).getBody().toString();
+        Page page = pageRepository.findAll().get(1);
+        try {
+            return mapper.treeToValue(page.getPageContents().get(0).getBody(), TextElement.class).toString();
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
