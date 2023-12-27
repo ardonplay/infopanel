@@ -23,12 +23,15 @@ public class Page {
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
     private Page parentPage;
 
+    @OneToMany(mappedBy = "parentPage", cascade = CascadeType.ALL)
+    private List<Page> children;
+
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "type", referencedColumnName = "id")
     private PageType pageType;
 
     @OneToMany(mappedBy = "page", cascade = CascadeType.ALL)
-    private List<PageContent> pageContents;
+    private List<PageContent> content;
 
     @Override
     public String toString(){

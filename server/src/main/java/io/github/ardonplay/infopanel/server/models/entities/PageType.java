@@ -23,4 +23,9 @@ public class PageType {
 
     @OneToMany(mappedBy = "pageType", cascade = CascadeType.ALL)
     private List<Page> pages;
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

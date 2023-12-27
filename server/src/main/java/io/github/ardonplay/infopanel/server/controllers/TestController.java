@@ -11,12 +11,14 @@ import io.github.ardonplay.infopanel.server.models.entities.PageType;
 import io.github.ardonplay.infopanel.server.repositories.PageRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController("/")
+@RestController
+@RequestMapping("/")
 @AllArgsConstructor
 public class TestController {
     private final PageRepository pageRepository;
@@ -40,7 +42,7 @@ public class TestController {
 
         page.setPageType(PageType.builder().name("DEFAULT").build());
         page.setTitle("test_page");
-        page.setPageContents(pageContents);
+        page.setContent(pageContents);
 
         return pageRepository.save(page).getTitle();
     }
@@ -56,7 +58,7 @@ public class TestController {
     private String get() {
         Page page = pageRepository.findAll().get(1);
         try {
-            return mapper.treeToValue(page.getPageContents().get(0).getBody(), TextElement.class).toString();
+            return mapper.treeToValue(page.getContent().get(0).getBody(), TextElement.class).toString();
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
