@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PageContentDTO {
+    Integer order;
     String type;
     JsonNode body;
 }

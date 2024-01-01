@@ -9,6 +9,7 @@ import java.util.List;
 
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class PageDTO {
@@ -17,6 +18,10 @@ public class PageDTO {
     String title;
 
     String type;
+
+    Integer order;
+
+    Integer parentId;
 
     List<PageContentDTO> content;
 }

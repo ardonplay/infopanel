@@ -16,26 +16,26 @@ public class Page {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "order")
+    @Column(name = "\"order\"")
     private Integer order;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne()
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
     private Page parentPage;
 
-    @OneToMany(mappedBy = "parentPage", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "parentPage")
     private List<Page> children;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne()
     @JoinColumn(name = "type", referencedColumnName = "id")
     private PageType pageType;
 
-    @OneToMany(mappedBy = "page", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "page", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private List<PageContent> content;
 
     @Override
     public String toString(){
-        return String.format("{ page: { id: %s, title: %s, pageType:  %s } }", id, title, pageType.getName());
+        return String.format("{ page: { id: %s, title: %s, pageType:  %s, order: %s } }", id, title, pageType.getName(), order);
     }
 
 }
